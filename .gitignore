@@ -1,0 +1,100 @@
+# ===== OS / Editor =====
+# Windows
+Thumbs.db
+Desktop.ini
+# macOS (in case you work cross-platform)
+.DS_Store
+.AppleDouble
+.LSOverride
+# VS Code
+.vscode/
+# JetBrains
+.idea/
+
+# ===== Python (backend, ai/) =====
+__pycache__/
+*.py[cod]
+*$py.class
+.python-version
+.venv/
+venv/
+env/
+pip-wheel-metadata/
+dist/
+build/
+.eggs/
+*.egg-info/
+*.egg
+# Testing / tooling
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+.mypy_cache/
+.pytype/
+.ruff_cache/
+.cache/
+# Notebooks
+.ipynb_checkpoints/
+
+# Secrets / config
+.env
+.env.*
+!.env.example
+
+# Logs
+logs/
+*.log
+*.pid
+
+# SQLite (dev)
+*.sqlite
+*.sqlite3
+*.db
+finance_tracker.db
+
+# Alembic
+# (Keep migrations in VCS; they live under db/migrations and should NOT be ignored)
+alembic.ini
+
+# ===== Node / React (frontend/) =====
+frontend/node_modules/
+frontend/.env
+frontend/.env.local
+frontend/.env.*.local
+# CRA build output
+frontend/build/
+# Common JS tools caches
+frontend/.cache/
+frontend/.parcel-cache/
+frontend/.next/
+frontend/.nuxt/
+frontend/dist/
+# Lockfiles SHOULD be committed, so do NOT ignore:
+# package-lock.json / yarn.lock / pnpm-lock.yaml
+
+# ===== AI / Model Artifacts (optional) =====
+*.onnx
+*.pt
+*.pth
+*.pb
+*.h5
+*.ckpt
+
+# ===== Binaries / Archives (keep installers out of Git) =====
+*.exe
+*.msi
+*.dmg
+*.zip
+*.tar
+*.tar.gz
+*.7z
+
+# ===== Misc =====
+# local data dumps and scratch
+data/
+datasets/
+tmp/
+temp/

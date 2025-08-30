@@ -1,6 +1,7 @@
 from fastapi import FastAPI
+from backend.routers import auth, transactions, analytics
 from fastapi.middleware.cors import CORSMiddleware
-from routers import auth, transactions, analytics  # you'll create these routers later
+
 
 app = FastAPI(title="Personal Finance Tracker")
 
@@ -25,4 +26,4 @@ app.include_router(analytics.router, prefix="/analytics", tags=["analytics"])
 
 @app.get("/")
 def root():
-    return {"message": "Finance Tracker API is running 🚀"}
+    return {"message": "Finance Tracker API is running 🚀"} 

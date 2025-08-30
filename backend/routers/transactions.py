@@ -5,7 +5,7 @@ from datetime import date
 
 from backend.db.database import SessionLocal
 from backend.models.transaction import Transaction
-from pydantic import BaseModel
+from backend.schemas.transaction import TransactionCreate, TransactionUpdate, TransactionResponse
 
 router = APIRouter(prefix="/transactions", tags=["transactions"])
 
@@ -16,21 +16,6 @@ def get_db():
         yield db
     finally:
         db.close()
-
-# Schemas
-class TransactionCreate(BaseModel):
-    date: date
-    amount: float
-    merchant: Optional[str] = None
-    description: Optional[str] = None
-    category: Optional[str] = None
-
-class TransactionResponse(TransactionCreate):
-    id: int
-    user_id: int
-
-    class Config:
-        orm_mode = True
 
 # CRUD Endpoints
 

@@ -5,8 +5,10 @@ from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, clear_mappers
 
+from backend.models.user import User
 from backend.app import app
 from backend.db.database import Base, get_db
+
 
 # Create a temporary SQLite database for testing
 @pytest.fixture(scope="function")
@@ -46,3 +48,19 @@ def test_db():
 def client(test_db):
     with TestClient(app) as c:
         yield c
+
+# Seed a test user into the DB
+@pytest.fixture(scope="function", autouse=True)
+def seed_user(test_db):
+    session = test_db()
+    
+    user = User(
+        # id=1,
+        username="testuser",
+        email="test@example.com",
+        hashed_password="test"
+    )
+    session.add(user)
+    session.commit()
+    yield
+    session.close()

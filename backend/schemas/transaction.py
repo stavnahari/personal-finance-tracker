@@ -3,7 +3,7 @@ from typing import Optional
 from pydantic import BaseModel, ConfigDict
 
 class TransactionBase(BaseModel):
-    date: datetime.date
+    transaction_date: datetime.date
     amount: float
     merchant: Optional[str] = None
     description: Optional[str] = None

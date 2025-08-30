@@ -7,7 +7,7 @@ from backend.db.database import SessionLocal
 from backend.models.transaction import Transaction
 from backend.schemas.transaction import TransactionCreate, TransactionUpdate, TransactionResponse
 
-router = APIRouter(prefix="/transactions", tags=["transactions"])
+router = APIRouter()
 
 # Dependency: get DB session
 def get_db():
@@ -20,7 +20,7 @@ def get_db():
 # CRUD Endpoints
 
 # Creates a transaction
-@router.post("/", response_model=TransactionResponse)
+@router.post("", response_model=TransactionResponse)
 def create_transaction(tx: TransactionCreate, db: Session = Depends(get_db)):
     new_tx = Transaction(**tx.model_dump(), user_id=1)  # TODO: replace 1 with current_user.id
     db.add(new_tx)
@@ -29,7 +29,7 @@ def create_transaction(tx: TransactionCreate, db: Session = Depends(get_db)):
     return new_tx
 
 # Lists transactions with filters (from_date, to_date, category, search q, pagination)
-@router.get("/", response_model=List[TransactionResponse])
+@router.get("", response_model=List[TransactionResponse])
 def list_transactions(
     db: Session = Depends(get_db),
     from_date: Optional[date] = None,
@@ -55,15 +55,15 @@ def list_transactions(
 # Fetch a single transaction by ID (404 if not found)
 @router.get("/{tx_id}", response_model=TransactionResponse)
 def get_transaction(tx_id: int, db: Session = Depends(get_db)):
-    tx = db.query(Transaction).get(tx_id)
+    tx = db.get(Transaction, tx_id)
     if not tx:
         raise HTTPException(status_code=404, detail="Transaction not found")
     return tx
 
 # Updates an existing transaction (404 if not found)
 @router.put("/{tx_id}", response_model=TransactionResponse)
-def update_transaction(tx_id: int, tx_data: TransactionCreate, db: Session = Depends(get_db)):
-    tx = db.query(Transaction).get(tx_id)
+def update_transaction(tx_id: int, tx_data: TransactionUpdate, db: Session = Depends(get_db)):
+    tx = db.get(Transaction, tx_id)
     if not tx:
         raise HTTPException(status_code=404, detail="Transaction not found")
 
@@ -77,7 +77,7 @@ def update_transaction(tx_id: int, tx_data: TransactionCreate, db: Session = Dep
 # Deletes a transaction
 @router.delete("/{tx_id}")
 def delete_transaction(tx_id: int, db: Session = Depends(get_db)):
-    tx = db.query(Transaction).get(tx_id)
+    tx = db.get(Transaction, tx_id)
     if not tx:
         raise HTTPException(status_code=404, detail="Transaction not found")
 
